@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BallooningMelbourne.Models.booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book with us! Enjoy your ride</h2>
+
+<p>
+    @Html.ActionLink("Book Now", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminEventtable.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PASSENGERCOUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminEventtable.EventName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PASSENGERCOUNT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.ActionLink("Add Rating", "Rating", new { id = item.BOOKINGID }) |
+                    @Html.ActionLink("View Details", "Details", new { id = item.BOOKINGID }) |
+                    @Html.ActionLink("Cancel Booking", "Delete", new { id = item.BOOKINGID })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    <script>
+ $(document).ready(function () {
+ $('.table').DataTable();
+ });
+    </script>
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+      rel="stylesheet" />
+

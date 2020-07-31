@@ -1,0 +1,59 @@
+﻿@model BallooningMelbourne.Models.booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View your Booking</h2>
+
+<div>
+    @*<h4>Your Bookings</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminEventtable.EventName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminEventtable.EventName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PASSENGERCOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASSENGERCOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Want to update event?", "Edit", new { id = Model.BOOKINGID }) |
+    @Html.ActionLink("My Bookings", "Index")
+</p>

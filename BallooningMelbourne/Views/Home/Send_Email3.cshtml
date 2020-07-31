@@ -1,0 +1,139 @@
+﻿@model BallooningMelbourne.Models.SendEmailViewModel
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Please ensure to fill in the correct email address</h2>
+
+
+@*@using (Html.BeginForm())*@
+@using (Html.BeginForm("Send_Email3", "Home", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    if (@ViewBag.Result != null)
+    {
+        <div class="alert alert-info">@ViewBag.Result</div>
+    }
+
+    <div class="form-horizontal">
+        @*<h4>SendEmailViewModel</h4>*@
+        <hr />
+        <div class="form-group col-lg-12">
+            <h4 class="control-label col-md-2">Select emails from the database:</h4>
+            <div class="col-lg-10">
+                <select id="pro1" multiple="multiple" required name="pro2" class="list" style="width: 100%; margin-bottom: 20px;">
+                    @if (ViewBag.usersList != null)
+                    {
+                        foreach (var item in ViewBag.usersList)
+                        {
+                            if (item.Text != null)
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn custom-btn cent push1" id="push1">Push to the Queue</button>
+
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToEmail, new { htmlAttributes = new { @class = "form-control pushList",@id="pushList"} })
+                @Html.ValidationMessageFor(model => model.ToEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Upload, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="emailAttachment" id="emailAttachment" class="btn btn-default" />
+                @Html.ValidationMessageFor(model => model.Upload, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Contents, new { @class = "form-control", @id = "mytextarea" })
+                @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            tinymce.init({
+                selector: '#myTextArea'
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $(".push1").click(function () {
+                    var arr = [];
+                    $.each($(".list option:selected"), function () {
+                        arr.push($(this).val());
+                    });
+                    $("#pushList").val(arr);
+
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(function () {
+                    $('#pro1').multiselect({
+                        includeSelectAllOption: true
+                    });
+                });
+                $("#push1").click(function () {
+                    var arr = [];
+                    $.each($(".list option:selected"), function () {
+                        arr.push($(this).val());
+                    });
+                    $("#pushList").append(arr);
+                });
+
+            });
+
+        </script>
+    }
+<style>
+    #push1{
+        background-color: red;
+        color: white;
+    }
+</style>
